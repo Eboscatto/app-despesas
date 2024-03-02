@@ -17,7 +17,8 @@ namespace AppDespesas.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Despesas Web MVC App do curso C#.";
+            ViewData["Autor"] = "Everaldo Boscatto";           
 
             return View();
         }

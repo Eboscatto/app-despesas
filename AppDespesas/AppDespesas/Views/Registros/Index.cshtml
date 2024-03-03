@@ -1,0 +1,58 @@
+﻿<!-- Tela Lançamento de despesa -->
+
+@model IEnumerable<AppDespesas.Models.RegistroDespesas>
+    @{
+        ViewData["Title"] = "Registros";
+    }
+
+    <h2>@ViewData["Title"]</h2>
+    
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="sucess">
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Historico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Despesa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pagamento)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Historico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Despesa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pagamento)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+            </td>
+        </tr>
+            }
+    </tbody>
+</table>

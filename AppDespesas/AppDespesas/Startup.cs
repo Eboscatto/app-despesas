@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using AppDespesas;
 using AppDespesas.Models;
 using AppDespesas.Data;
+using AppDespesas.Services;
 
 namespace AppDespesas
 {
@@ -42,6 +43,7 @@ namespace AppDespesas
                    options.UseMySql(Configuration.GetConnectionString("AppDespesasContext"), builder =>
                         builder.MigrationsAssembly("AppDespesas")));
             services.AddScoped<SeedingService>();
+            services.AddScoped<RegistroService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

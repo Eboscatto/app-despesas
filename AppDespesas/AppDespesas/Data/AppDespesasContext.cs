@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.EntityFrameworkCore;
 using AppDespesas.Models;
 
-namespace AppDespesas.Data
+namespace AppDespesas.Models
 {
     public class AppDespesasContext : DbContext
     {
         public AppDespesasContext (DbContextOptions<AppDespesasContext> options)
             : base(options)
         {
-        }
 
-        public DbSet<AppDespesas.Models.Despesa> Despesa { get; set; }
+        }
+        public DbSet<Despesa> Despesa { get; set; }
+        public DbSet< RegistroDespesas> registrosDespesas  { get; set; }
     }
 }

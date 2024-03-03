@@ -10,7 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using AppDespesas.Data;
+using AppDespesas;
+using AppDespesas.Models;
 
 namespace AppDespesas
 {

@@ -3,14 +3,16 @@ using System;
 using AppDespesas.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppDespesas.Migrations
 {
     [DbContext(typeof(AppDespesasContext))]
-    partial class AppDespesasContextModelSnapshot : ModelSnapshot
+    [Migration("20240303003026_OutrasClasses")]
+    partial class OutrasClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

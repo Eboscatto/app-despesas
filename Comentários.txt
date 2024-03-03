@@ -13,3 +13,13 @@ Alterar o namesapace do arquivo Error.cshtml da pasta Shared
 CODE-FIRST worflow - > você escreve as classes na linguagem orientada a objeto e apartir dessas classes é gerado o banco de dados.
 DATA BASE FIRST -> primeiro você cria o banco de dados no SQL e depois gera as classes na linguagem orientadas a objtos.
 6º passo adaptar a string de conexão com o banco de dados MySql.
+
+7º Mudas o tema do BootStrap - Desing da aplicação.
+
+8º Criar demais classes
+
+9º Fazer composiçoes entre classes
+
+10º Criar construtores
+
+11º Criar os métodos customizados nas classes 

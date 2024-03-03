@@ -12,6 +12,6 @@ namespace AppDespesas.Models
 
         }
         public DbSet<Despesa> Despesa { get; set; }
-        public DbSet< RegistroDespesas> registrosDespesas  { get; set; }
+        public DbSet< RegistroDespesas> RegistrosDespesas  { get; set; }
     }
 }

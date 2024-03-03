@@ -23,3 +23,7 @@ DATA BASE FIRST -> primeiro você cria o banco de dados no SQL e depois gera as 
 10º Criar construtores
 
 11º Criar os métodos customizados nas classes 
+
+12º Criar serviço para popular base de dados - Classse - SeedingService
+13º Registrar o serviço SeedingService no registro de dependencias da aplicação Startup.cs
+	services.AddScoped<SeedingService>();

@@ -20,5 +20,12 @@ namespace AppDespesas.Services
             return _context.RegistrosDespesas.ToList();
         }
 
+        public void Insert(RegistroDespesas obj)
+        {
+            _context.Add(obj);
+            _context.SaveChanges();
+        }
+
+
     }
 }

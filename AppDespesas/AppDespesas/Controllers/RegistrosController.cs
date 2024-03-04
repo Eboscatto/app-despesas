@@ -1,4 +1,5 @@
-﻿using AppDespesas.Services;
+﻿using AppDespesas.Models;
+using AppDespesas.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,19 @@ namespace AppDespesas.Controllers
         {
             var list = _registroService.FindAll();
             return View(list);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(RegistroDespesas registro)
+        {
+            _registroService.Insert(registro);//Executa a ação
+            return RedirectToAction(nameof(Index));//Retorna para página de resitros
         }
     }
 }

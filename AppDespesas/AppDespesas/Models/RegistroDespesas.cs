@@ -12,6 +12,7 @@ namespace AppDespesas.Models
         public string Historico { get; set; }
         public double Valor { get; set; }
         public Despesa Despesa { get; set; } // Um registro de despesa pode ter apenas um tipo de despesa
+        public int DespesaId { get; set; }
         public TipoPagamento Pagamento  { get; set; }
 
         public RegistroDespesas()

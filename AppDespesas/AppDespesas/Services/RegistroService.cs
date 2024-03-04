@@ -22,6 +22,7 @@ namespace AppDespesas.Services
 
         public void Insert(RegistroDespesas obj)
         {
+            obj.Despesa = _context.Despesa.First();
             _context.Add(obj);
             _context.SaveChanges();
         }

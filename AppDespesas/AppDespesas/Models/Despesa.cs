@@ -2,12 +2,16 @@
 using System.Linq;
 using System.Collections.Generic;
 using AppDespesas.Migrations;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppDespesas.Models
 {
     public class Despesa
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "{0} é requerido")]
+        [StringLength(20, MinimumLength = 5, ErrorMessage = "{0} deve ter entre {2} e {1} caracteres")]
+        [Display(Name = "Nome da despesa")]
         public string Nome { get; set; }
         public ICollection<RegistroDespesas> Registros { get; set; } = new List<RegistroDespesas>();// Despesa pode ter vários registros de despesas
 

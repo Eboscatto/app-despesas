@@ -1,20 +1,19 @@
 ﻿using AppDespesas.Models;
 using AppDespesas.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AppDespesas.Models.ViewModels;
 
 namespace AppDespesas.Controllers
 {
     public class RegistrosController : Controller
     {
-        private readonly RegistroService _registroService;
+        private readonly RegistrosService _registroService;
+        private readonly DespesaService _despesaService;
 
-        public RegistrosController(RegistroService registroService)
+        public RegistrosController(RegistrosService registroService, DespesaService despesaService)
         {
             _registroService = registroService;
+            _despesaService = despesaService;
         }
 
         public IActionResult Index()
@@ -25,14 +24,16 @@ namespace AppDespesas.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var despesas = _despesaService.FindAll();
+            var viewModel = new RegistroFormViewModel { Despesas = despesas };
+            return View(viewModel);
         }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(RegistroDespesas registro)
+        public IActionResult Create(RegistroDespesas registroDespesas)
         {
-            _registroService.Insert(registro);//Executa a ação
+            _registroService.Insert(registroDespesas);//Executa a ação
             return RedirectToAction(nameof(Index));//Retorna para página de resitros
         }
     }

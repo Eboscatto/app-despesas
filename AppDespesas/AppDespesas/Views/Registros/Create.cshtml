@@ -1,5 +1,4 @@
-﻿@model AppDespesas.Models.RegistroDespesas
-
+﻿@model AppDespesas.Models.ViewModels.RegistroFormViewModel
 @{
     ViewData["Title"] = "Create";
 }
@@ -10,27 +9,27 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" class="form-control" />
+                <label asp-for="RegistroDespesas.Data" class="control-label"></label>
+                <input asp-for="RegistroDespesas.Data" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Historico" class="control-label"></label>
-                <input asp-for="Historico" class="form-control" />
+                <label asp-for="RegistroDespesas.Historico" class="control-label"></label>
+                <input asp-for="RegistroDespesas.Historico" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Valor" class="control-label"></label>
-                <input asp-for="Valor" class="form-control" />
+                <label asp-for="RegistroDespesas.Valor" class="control-label"></label>
+                <input asp-for="RegistroDespesas.Valor" class="form-control" />
+            </div>            
+            <div class="form-group">
+                <label asp-for="RegistroDespesas.Pagamento" class="control-label"></label>
+                <input asp-for="RegistroDespesas.Pagamento" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Despesa" class="control-label"></label>
-                <input asp-for="Despesa" class="form-control" />
+                <label asp-for="RegistroDespesas.DespesaId" class="control-label"></label>
+                <select asp-for="RegistroDespesas.DespesaId" asp-items="@(new SelectList(Model.Despesas,"Id", "Nome"))" class="form-control"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Pagamento" class="control-label"></label>
-                <input asp-for="Pagamento" class="form-control" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default"/>
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>

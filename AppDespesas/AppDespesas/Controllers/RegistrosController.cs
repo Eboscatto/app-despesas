@@ -36,5 +36,26 @@ namespace AppDespesas.Controllers
             _registroService.Insert(registroDespesas);//Executa a ação
             return RedirectToAction(nameof(Index));//Retorna para página de resitros
         }
+
+        public IActionResult Delete(int? id)//Método do delete
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = _registroService.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            _registroService.Remove(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

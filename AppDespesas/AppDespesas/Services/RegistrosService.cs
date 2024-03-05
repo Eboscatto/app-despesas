@@ -32,7 +32,7 @@ namespace AppDespesas.Services
             return _context.RegistrosDespesas.FirstOrDefault(obj => obj.Id == id);
         }
 
-        public void Remove(int id)
+        public void Remove(int id)//Abre a tela de confirmação de deletar
         {
             var obj = _context.RegistrosDespesas.Find(id);
             _context.RegistrosDespesas.Remove(obj);

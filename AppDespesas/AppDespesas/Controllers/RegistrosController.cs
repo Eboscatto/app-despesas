@@ -36,6 +36,13 @@ namespace AppDespesas.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(RegistroDespesas registroDespesas)
         {
+            //Faz a validação mesmo se o JS estiver desabilitado
+            if (!ModelState.IsValid)
+            {
+                var despesas = _despesaService.FindAll();
+                var viewModel = new RegistroFormViewModel { RegistroDespesas = registroDespesas, Despesas = despesas };
+                return View(viewModel);
+            }
             _registroService.Insert(registroDespesas);//Executa a ação
             return RedirectToAction(nameof(Index));//Retorna para página de resitros
         }
@@ -98,6 +105,13 @@ namespace AppDespesas.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, RegistroDespesas registroDespesas)
         {
+            if (!ModelState.IsValid)
+            {
+                var despesas = _despesaService.FindAll();
+                var viewModel = new RegistroFormViewModel { RegistroDespesas = registroDespesas, Despesas = despesas };
+                return View(viewModel);
+            }
+
             if (id != registroDespesas.Id)
             {
                 return  RedirectToAction(nameof(Error), new { message = "Id não confere!" });

@@ -22,7 +22,7 @@ namespace AppDespesas.Models
 
         [Required(ErrorMessage = "{0} requerido")]
         [DisplayFormat(DataFormatString = "{0:F2}")]
-        [Range(100.0, 50000.0, ErrorMessage = "{0} must be from {1} to {2}")]
+        [Range(0.1, 50000.0, ErrorMessage = "{0} must be from {1} to {2}")]
         public double Valor { get; set; }
         public Despesa Despesa { get; set; } // Um registro de despesa pode ter apenas um tipo de despesa
         public int DespesaId { get; set; }

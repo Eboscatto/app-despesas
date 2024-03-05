@@ -12,22 +12,27 @@
             <div class="form-group">
                 <label asp-for="RegistroDespesas.Data" class="control-label"></label>
                 <input asp-for="RegistroDespesas.Data" class="form-control" />
+                <span asp-validation-for="RegistroDespesas.Data" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RegistroDespesas.Historico" class="control-label"></label>
                 <input asp-for="RegistroDespesas.Historico" class="form-control" />
+                <span asp-validation-for="RegistroDespesas.Historico" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RegistroDespesas.Valor" class="control-label"></label>
                 <input asp-for="RegistroDespesas.Valor" class="form-control" />
+                <span asp-validation-for="RegistroDespesas.Valor" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RegistroDespesas.Pagamento" class="control-label"></label>
                 <input asp-for="RegistroDespesas.Pagamento" class="form-control" />
+                <span asp-validation-for="RegistroDespesas.Pagamento" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RegistroDespesas.DespesaId" class="control-label"></label>
                 <select asp-for="RegistroDespesas.DespesaId" asp-items="@(new SelectList(Model.Despesas,"Id", "Nome"))" class="form-control"></select>
+                <span asp-validation-for="RegistroDespesas.DespesaId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppDespesas.Services
 {
@@ -17,7 +18,7 @@ namespace AppDespesas.Services
 
         public List<RegistroDespesas> FindAll()
         {
-            return _context.RegistrosDespesas.ToList();
+            return _context.RegistrosDespesas.Include(obj => obj.Despesa).ToList();
         }
 
         public void Insert(RegistroDespesas obj)
@@ -28,8 +29,8 @@ namespace AppDespesas.Services
         }
 
         public RegistroDespesas FindById(int id)
-        {
-            return _context.RegistrosDespesas.FirstOrDefault(obj => obj.Id == id);
+        {   //Faz o eager loading carregando o objeto despesa junto
+            return _context.RegistrosDespesas.Include(obj => obj.Despesa).FirstOrDefault(obj => obj.Id == id);
         }
 
         public void Remove(int id)//Abre a tela de confirmação de deletar

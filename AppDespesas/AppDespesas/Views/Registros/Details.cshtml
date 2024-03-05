@@ -1,0 +1,43 @@
+﻿
+@model AppDespesas.Models.RegistroDespesas
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Lançamentos</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Historico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Historico)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Despesa)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Despesa.Nome)
+        </dd>
+    </dl>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Editar</a> |
+    <a asp-action="Index">Voltar</a>
+
+</div>
+

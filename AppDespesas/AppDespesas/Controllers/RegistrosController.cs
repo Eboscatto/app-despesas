@@ -37,7 +37,7 @@ namespace AppDespesas.Controllers
             return RedirectToAction(nameof(Index));//Retorna para página de resitros
         }
 
-        public IActionResult Delete(int? id)//Método do delete
+        public IActionResult Delete(int? id)//Método do delete Get
         {
             if (id == null)
             {
@@ -56,6 +56,23 @@ namespace AppDespesas.Controllers
         {
             _registroService.Remove(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Details(int? id)//Método do details Get
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _registroService.FindById(id.Value);
+                
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
         }
     }
 }

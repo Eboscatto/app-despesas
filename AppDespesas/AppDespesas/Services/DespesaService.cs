@@ -1,6 +1,8 @@
 ﻿using AppDespesas.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppDespesas.Services
 {
@@ -13,9 +15,10 @@ namespace AppDespesas.Services
             _context = context;
         }
 
-        public List<Despesa> FindAll()
+        public async Task<List<Despesa>> FindAllAsync()
         {
-            return _context.Despesa.OrderBy(x => x.Nome).ToList();
+            //Expressão Linq
+            return await _context.Despesa.OrderBy(x => x.Nome).ToListAsync();
         }
 
     }

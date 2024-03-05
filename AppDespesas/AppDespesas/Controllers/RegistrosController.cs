@@ -5,6 +5,7 @@ using AppDespesas.Models.ViewModels;
 using System.Collections.Generic;
 using AppDespesas.Services.Exceptions;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace AppDespesas.Controllers
 {
@@ -19,41 +20,41 @@ namespace AppDespesas.Controllers
             _despesaService = despesaService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var list = _registroService.FindAll();
+            var list = await _registroService.FindAllAsync();
             return View(list);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var despesas = _despesaService.FindAll();
+            var despesas = await _despesaService.FindAllAsync();
             var viewModel = new RegistroFormViewModel { Despesas = despesas };
             return View(viewModel);
         }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(RegistroDespesas registroDespesas)
+        public async Task<IActionResult> Create(RegistroDespesas registroDespesas)
         {
             //Faz a validação mesmo se o JS estiver desabilitado
             if (!ModelState.IsValid)
             {
-                var despesas = _despesaService.FindAll();
+                var despesas = await _despesaService.FindAllAsync();
                 var viewModel = new RegistroFormViewModel { RegistroDespesas = registroDespesas, Despesas = despesas };
                 return View(viewModel);
             }
-            _registroService.Insert(registroDespesas);//Executa a ação
+            await _registroService.InsertAsync(registroDespesas);//Executa a ação
             return RedirectToAction(nameof(Index));//Retorna para página de resitros
         }
 
-        public IActionResult Delete(int? id)//Método do delete Get
+        public async Task<IActionResult> Delete(int? id)//Método do delete Get
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
-            var obj = _registroService.FindById(id.Value);
+            var obj = await _registroService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não exite!" });
@@ -62,20 +63,20 @@ namespace AppDespesas.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _registroService.Remove(id);
+            await _registroService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int? id)//Método Get do details 
+        public async Task<IActionResult> Details(int? id)//Método Get do details 
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
 
-            var obj = _registroService.FindById(id.Value);
+            var obj = await _registroService.FindByIdAsync(id.Value);
 
             if (obj == null)
             {
@@ -84,30 +85,30 @@ namespace AppDespesas.Controllers
             return View(obj);
         }
         //Ação Edit do método GET
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
-            var obj = _registroService.FindById(id.Value);
+            var obj = await _registroService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não confere!" });
             }
             //Abre a tela de edição
-            List<Despesa> despeas = _despesaService.FindAll();
+            List<Despesa> despeas = await _despesaService.FindAllAsync();
             RegistroFormViewModel viewModel = new RegistroFormViewModel { RegistroDespesas = obj, Despesas = despeas };
             return View(viewModel);
         }
         //Ação Edit do método POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, RegistroDespesas registroDespesas)
+        public async Task<IActionResult> Edit(int id, RegistroDespesas registroDespesas)
         {
             if (!ModelState.IsValid)
             {
-                var despesas = _despesaService.FindAll();
+                var despesas = await _despesaService.FindAllAsync();
                 var viewModel = new RegistroFormViewModel { RegistroDespesas = registroDespesas, Despesas = despesas };
                 return View(viewModel);
             }
@@ -118,7 +119,7 @@ namespace AppDespesas.Controllers
             }
            try
             {
-                _registroService.Update(registroDespesas);
+                await _registroService.UpdateAsync(registroDespesas);
                 return RedirectToAction(nameof(Index));
             }
             catch(KeyNotFoundException e)

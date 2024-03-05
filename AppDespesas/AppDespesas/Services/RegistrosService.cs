@@ -17,41 +17,42 @@ namespace AppDespesas.Services
             _context = context;
         }
 
-        public List<RegistroDespesas> FindAll()
+        public async Task<List<RegistroDespesas>> FindAllAsync()
         {
-            return _context.RegistrosDespesas.Include(obj => obj.Despesa).ToList();
+            return await _context.RegistrosDespesas.Include(obj => obj.Despesa).ToListAsync();
         }
 
-        public void Insert(RegistroDespesas obj)
+        public async Task InsertAsync(RegistroDespesas obj)
         {
             //obj.Despesa = _context.Despesa.First();
             _context.Add(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public RegistroDespesas FindById(int id)
+        public async Task <RegistroDespesas> FindByIdAsync(int id)
         {   //Faz o eager loading carregando o objeto despesa junto
-            return _context.RegistrosDespesas.Include(obj => obj.Despesa).FirstOrDefault(obj => obj.Id == id);
+            return await _context.RegistrosDespesas.Include(obj => obj.Despesa).FirstOrDefaultAsync(obj => obj.Id == id);
         }
 
-        public void Remove(int id)//Abre a tela de confirmação de deletar
+        public async Task RemoveAsync(int id)//Abre a tela de confirmação de deletar
         {
-            var obj = _context.RegistrosDespesas.Find(id);
+            var obj = await _context.RegistrosDespesas.FindAsync(id);
             _context.RegistrosDespesas.Remove(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }      
         
         //Editar/Atulalizar dados
-        public void Update(RegistroDespesas obj)
+        public async Task UpdateAsync(RegistroDespesas obj)
         {
-            if (!_context.RegistrosDespesas.Any(x => x.Id == obj.Id))
+            bool hasAny = await _context.RegistrosDespesas.AnyAsync(x => x.Id == obj.Id);
+            if (!hasAny)
             {
                 throw new NotFoundException("Id não existe!");
             }
             try
             {
                 _context.Update(obj);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch(DbConcurrencyException e)
             {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using AppDespesas.Models.ViewModels;
 using System.Collections.Generic;
 using AppDespesas.Services.Exceptions;
+using System.Diagnostics;
 
 namespace AppDespesas.Controllers
 {
@@ -43,12 +44,12 @@ namespace AppDespesas.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
             var obj = _registroService.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não exite!" });
             }
             return View(obj);
         }
@@ -64,14 +65,14 @@ namespace AppDespesas.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
 
             var obj = _registroService.FindById(id.Value);
 
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não existe!" });
             }
             return View(obj);
         }
@@ -80,12 +81,12 @@ namespace AppDespesas.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
             var obj = _registroService.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não confere!" });
             }
             //Abre a tela de edição
             List<Despesa> despeas = _despesaService.FindAll();
@@ -99,7 +100,7 @@ namespace AppDespesas.Controllers
         {
             if (id != registroDespesas.Id)
             {
-                return BadRequest();
+                return  RedirectToAction(nameof(Error), new { message = "Id não confere!" });
             }
            try
             {
@@ -108,13 +109,24 @@ namespace AppDespesas.Controllers
             }
             catch(KeyNotFoundException e)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
 
-            catch (DbConcurrencyException)
+            catch (DbConcurrencyException e)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
+        }
+
+        //Médodo de Erros
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
 
     }

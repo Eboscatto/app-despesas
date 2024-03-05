@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AppDespesas;
 using AppDespesas.Models;
+using AppDespesas.Models.ViewModels;
+using System.Diagnostics;
 
 namespace AppDespesas.Controllers
 {
@@ -30,16 +32,15 @@ namespace AppDespesas.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
 
             var despesa = await _context.Despesa
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (despesa == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não existe!" });
             }
-
             return View(despesa);
         }
 
@@ -70,13 +71,13 @@ namespace AppDespesas.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
 
             var despesa = await _context.Despesa.FindAsync(id);
             if (despesa == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não confere!" });
             }
             return View(despesa);
         }
@@ -90,7 +91,7 @@ namespace AppDespesas.Controllers
         {
             if (id != despesa.Id)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não existe!" });
             }
 
             if (ModelState.IsValid)
@@ -104,7 +105,7 @@ namespace AppDespesas.Controllers
                 {
                     if (!DespesaExists(despesa.Id))
                     {
-                        return NotFound();
+                        return  RedirectToAction(nameof(Error), new { message = "Id não existe!" });
                     }
                     else
                     {
@@ -121,14 +122,14 @@ namespace AppDespesas.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não existe!" });
             }
 
             var despesa = await _context.Despesa
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (despesa == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não confere!" });
             }
 
             return View(despesa);
@@ -149,5 +150,18 @@ namespace AppDespesas.Controllers
         {
             return _context.Despesa.Any(e => e.Id == id);
         }
+
+        //Médodo de Erros
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
+        }
     }
 }
+
+

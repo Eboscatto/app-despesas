@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using AppDespesas.Services.Exceptions;
 
 namespace AppDespesas.Services
 {
@@ -38,7 +39,25 @@ namespace AppDespesas.Services
             var obj = _context.RegistrosDespesas.Find(id);
             _context.RegistrosDespesas.Remove(obj);
             _context.SaveChanges();
+        }      
+        
+        //Editar/Atulalizar dados
+        public void Update(RegistroDespesas obj)
+        {
+            if (!_context.RegistrosDespesas.Any(x => x.Id == obj.Id))
+            {
+                throw new NotFoundException("Id não existe!");
+            }
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+            catch(DbConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }            
         }
-
+        
     }
 }

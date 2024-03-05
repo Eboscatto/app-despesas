@@ -2,6 +2,8 @@
 using AppDespesas.Services;
 using Microsoft.AspNetCore.Mvc;
 using AppDespesas.Models.ViewModels;
+using System.Collections.Generic;
+using AppDespesas.Services.Exceptions;
 
 namespace AppDespesas.Controllers
 {
@@ -58,7 +60,7 @@ namespace AppDespesas.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int? id)//Método do details Get
+        public IActionResult Details(int? id)//Método Get do details 
         {
             if (id == null)
             {
@@ -66,13 +68,54 @@ namespace AppDespesas.Controllers
             }
 
             var obj = _registroService.FindById(id.Value);
-                
+
             if (obj == null)
             {
                 return NotFound();
             }
-
             return View(obj);
         }
+        //Ação Edit do método GET
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = _registroService.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            //Abre a tela de edição
+            List<Despesa> despeas = _despesaService.FindAll();
+            RegistroFormViewModel viewModel = new RegistroFormViewModel { RegistroDespesas = obj, Despesas = despeas };
+            return View(viewModel);
+        }
+        //Ação Edit do método POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, RegistroDespesas registroDespesas)
+        {
+            if (id != registroDespesas.Id)
+            {
+                return BadRequest();
+            }
+           try
+            {
+                _registroService.Update(registroDespesas);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(KeyNotFoundException e)
+            {
+                return NotFound();
+            }
+
+            catch (DbConcurrencyException)
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

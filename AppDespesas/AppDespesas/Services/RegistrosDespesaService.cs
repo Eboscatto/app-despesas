@@ -32,5 +32,23 @@ namespace AppDespesas.Services
                 .OrderByDescending(x => x.Data)
                 .ToListAsync();
         }
+        public async Task<List<IGrouping<Despesa, RegistroDespesas>>> FindByIdDateGrupoAsync(DateTime? minDate, DateTime? maxDate)
+        {
+            var result = from obj in _context.RegistrosDespesas select obj;
+            if (minDate.HasValue)
+            {
+                result = result.Where(x => x.Data >= minDate.Value);
+            }
+            if (maxDate.HasValue)
+            {
+                result = result.Where(x => x.Data <= maxDate.Value);
+            }
+            return await result
+                .Include(x => x.Despesa)//Fazendo join com a tabela Despesa
+                .OrderByDescending(x => x.Data)
+                .GroupBy(x => x.Despesa)
+                .ToListAsync();
+        }
+
     }
 }

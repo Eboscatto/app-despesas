@@ -39,9 +39,22 @@ namespace AppDespesas.Controllers
             return View(result);
         }
 
-        public IActionResult PesquisaGrupo()
+        public async Task<IActionResult> PesquisaGrupo(DateTime? minDate, DateTime? maxDate)
         {
-            return View();
+            if (!minDate.HasValue)
+            {
+                minDate = new DateTime(DateTime.Now.Year, 1, 1);
+            }
+            if (!maxDate.HasValue)
+            {
+                maxDate = DateTime.Now;
+            }
+
+            //Envia data para o formulário de pesquisa
+            ViewData["minDate"] = minDate.Value.ToString("yyyy-MMM-dd");
+            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MMM-dd");
+            var result = await _registrosDespesaService.FindByIdDateGrupoAsync(minDate, maxDate);
+            return View(result);
         }
     }
 }

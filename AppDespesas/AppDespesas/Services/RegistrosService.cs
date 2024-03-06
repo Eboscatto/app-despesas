@@ -36,9 +36,17 @@ namespace AppDespesas.Services
 
         public async Task RemoveAsync(int id)//Abre a tela de confirmação de deletar
         {
-            var obj = await _context.RegistrosDespesas.FindAsync(id);
-            _context.RegistrosDespesas.Remove(obj);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var obj = await _context.RegistrosDespesas.FindAsync(id);
+                _context.RegistrosDespesas.Remove(obj);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateException e)
+            {
+                throw new IntegrityException("Não posso deletar a despesa, pois possue registro!");
+            }
+            
         }      
         
         //Editar/Atulalizar dados

@@ -33,8 +33,8 @@ namespace AppDespesas.Controllers
             }
             
             //Envia data para o formulário de pesquisa
-            ViewData["minDate"] = minDate.Value.ToString("yyyy-MMM-dd");
-            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MMM-dd");
+            ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd");
+            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
             var result = await _registrosDespesaService.FindByIdDateAsync(minDate, maxDate);
             return View(result);
         }
@@ -51,8 +51,8 @@ namespace AppDespesas.Controllers
             }
 
             //Envia data para o formulário de pesquisa
-            ViewData["minDate"] = minDate.Value.ToString("yyyy-MMM-dd");
-            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MMM-dd");
+            ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd");
+            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
             var result = await _registrosDespesaService.FindByIdDateGrupoAsync(minDate, maxDate);
             return View(result);
         }

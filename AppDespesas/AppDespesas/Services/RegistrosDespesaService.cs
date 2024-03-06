@@ -46,7 +46,7 @@ namespace AppDespesas.Services
             return await result
                 .Include(x => x.Despesa)//Fazendo join com a tabela Despesa
                 .OrderByDescending(x => x.Data)
-                .GroupBy(x => x.Despesa)
+                .GroupBy(x => x.Despesa)//Agrupa os lançamentos por Despesa
                 .ToListAsync();
         }
 

@@ -1,5 +1,4 @@
 ﻿using AppDespesas.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,7 +41,7 @@ namespace AppDespesas.Services
                 _context.RegistrosDespesas.Remove(obj);
                 await _context.SaveChangesAsync();
             }
-            catch(DbUpdateException e)
+            catch(DbUpdateException)
             {
                 throw new IntegrityException("Não posso deletar a despesa, pois possue registro!");
             }

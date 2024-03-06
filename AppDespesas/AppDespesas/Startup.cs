@@ -44,6 +44,7 @@ namespace AppDespesas
             services.AddScoped<SeedingService>();
             services.AddScoped<RegistrosService>();
             services.AddScoped<DespesaService>();
+            services.AddScoped<RegistrosDespesaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

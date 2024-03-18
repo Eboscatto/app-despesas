@@ -9,6 +9,7 @@ using AppDespesas;
 using AppDespesas.Models;
 using AppDespesas.Models.ViewModels;
 using System.Diagnostics;
+using AppDespesas.Services.Exceptions;
 
 namespace AppDespesas.Controllers
 {
@@ -77,7 +78,7 @@ namespace AppDespesas.Controllers
             var despesa = await _context.Despesa.FindAsync(id);
             if (despesa == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id não confere!" });
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
             return View(despesa);
         }
@@ -91,7 +92,7 @@ namespace AppDespesas.Controllers
         {
             if (id != despesa.Id)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id não existe!" });
+                return RedirectToAction(nameof(Error), new { message = "Id não confere!" });
             }
 
             if (ModelState.IsValid)
@@ -122,14 +123,14 @@ namespace AppDespesas.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id não existe!" });
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
 
             var despesa = await _context.Despesa
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (despesa == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id não confere!" });
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido!" });
             }
 
             return View(despesa);
@@ -150,7 +151,6 @@ namespace AppDespesas.Controllers
         {
             return _context.Despesa.Any(e => e.Id == id);
         }
-
         //Médodo de Erros
         public IActionResult Error(string message)
         {

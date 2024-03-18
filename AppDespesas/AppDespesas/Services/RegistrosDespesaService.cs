@@ -18,11 +18,13 @@ namespace AppDespesas.Services
 
         public async Task<List<RegistroDespesas>> FindByIdDateAsync(DateTime? minDate, DateTime? maxDate)
         {
+            //Pesquisa lançamentos por data
             var result = from obj in _context.RegistrosDespesas select obj;
             if (minDate.HasValue)
             {
                 result = result.Where(x => x.Data >= minDate.Value);
             }
+            
             if (maxDate.HasValue)
             {
                 result = result.Where(x => x.Data <= maxDate.Value);
@@ -34,6 +36,7 @@ namespace AppDespesas.Services
         }
         public async Task<List<IGrouping<Despesa, RegistroDespesas>>> FindByIdDateGrupoAsync(DateTime? minDate, DateTime? maxDate)
         {
+            //Pesquisa lançamentos por despesa
             var result = from obj in _context.RegistrosDespesas select obj;
             if (minDate.HasValue)
             {
